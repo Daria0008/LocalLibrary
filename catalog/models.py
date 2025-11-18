@@ -31,11 +31,9 @@ class Book(models.Model):
     genre = models.ManyToManyField(Genre,
                                    help_text="Выберите жанр книги")
 
-
     def __str__(self):
         return self.title
     
-
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.id)])
 
@@ -55,8 +53,7 @@ class BookInstance(models.Model):
                           help_text="Уникальный числовой идентификатор для книги")
     book = models.ForeignKey('Book',
                              on_delete=models.SET_NULL,
-                             null=True)
-    
+                             null=True)    
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=1,
@@ -65,10 +62,8 @@ class BookInstance(models.Model):
                               default='m',
                               help_text="Метка наличия")
     
-
     class Meta:
         ordering = ["due_back"]
-
 
     def __str__(self):
         return f"Книга рег.номер {self.id} под названием {self.book.title}"
@@ -82,9 +77,22 @@ class Author(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
 
-
     def get_absolute_url(self):
-        return reverse('author-detail', args=[str(self.id)])
-    
+        return reverse('author-detail', args=[str(self.id)])    
+
     def __str__(self):
         return f"Автор {self.name} {self.first_name}"
+
+
+class Language(models.Model):
+    """Языки для книг"""
+
+    name = models.CharField(max_length=100,
+                            unique=True,
+                            help_text="Укажите язык текста")    
+
+    def get_absolute_url(self):
+        return reverse('language-detail', args=[str(self.id)])
+    
+    def __str__(self):
+        return f"Язык текста {self.name}"
