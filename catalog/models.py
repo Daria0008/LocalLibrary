@@ -36,6 +36,15 @@ class Book(models.Model):
     
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.id)])
+    
+    def display_genre(self):
+        """Создает небольшую выборку по жанрам
+        для отображения в админке
+        """
+
+        return ', '.join([genre.name for genre in self.genre.all()[:3]])
+    
+    display_genre.short_description = 'Genre'
 
 
 class BookInstance(models.Model):
@@ -81,7 +90,7 @@ class Author(models.Model):
         return reverse('author-detail', args=[str(self.id)])    
 
     def __str__(self):
-        return f"Автор {self.name} {self.first_name}"
+        return f"{self.last_name} {self.first_name}"
 
 
 class Language(models.Model):
