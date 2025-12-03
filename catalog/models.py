@@ -1,5 +1,7 @@
 import uuid
 
+from datetime import date
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -44,6 +46,13 @@ class Book(models.Model):
 
         return ', '.join([genre.name for genre in self.genre.all()[:3]])
     
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+
+        return False
+    
     display_genre.short_description = 'Genre'
 
 
@@ -60,6 +69,10 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           help_text="Уникальный числовой идентификатор для книги")
+    borrower = models.ForeignKey(User,
+                                 on_delete=models.SET_NULL,
+                                 null=True,
+                                 blank=True)
     book = models.ForeignKey('Book',
                              on_delete=models.SET_NULL,
                              null=True)    
