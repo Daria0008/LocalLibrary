@@ -1,22 +1,22 @@
 {% extends "base_generic.html" %}
 
-{% block title %}<title>Library assets</title>{% endblock %}
+{% block title %}<title>Библиотечные книги</title>{% endblock %}
 
 {% block content %}
-<h1>Local Library Home</h1>
+<h1>Главная страница</h1>
 
-  <p>Welcome to <em>LocalLibrary</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+  <p>Добро пожаловать на сайт нашей <em>Библиотеки</em></p>
 
-<h2>Dynamic content</h2>
+<h2>Книги в нашей библиотеке</h2>
 
-  <p>The library has the following record counts:</p>
+  <p>Немного про наши запасы книг:</p>
   <ul>
-    <li><strong>Books:</strong> {{ num_books }}</li>
-    <li><strong>Copies:</strong> {{ num_instances }}</li>
-    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
-    <li><strong>Authors:</strong> {{ num_authors }}</li>
-    <li><strong>Genres statistics:</strong> {{ num_genres }}</li>
-    <li><strong>Books about adventures:</strong> {{ title_word }}</li>
+    <li><strong>Книги:</strong> {{ num_books }}</li>
+    <li><strong>Число экземпляров:</strong> {{ num_instances }}</li>
+    <li><strong>Доступно к выдаче:</strong> {{ num_instances_available }}</li>
+    <li><strong>Авторы:</strong> {{ num_authors }}</li>
+    <li><strong>Статистика по жанрам:</strong> {{ num_genres }}</li>
+    <li><strong>Если любите приключения, то таких книг у нас:</strong> {{ title_word }}</li>
   </ul>
 
   <p>
