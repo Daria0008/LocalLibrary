@@ -37,7 +37,7 @@ class Book(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('book_detail', args=[str(self.id)])
     
     def display_genre(self):
         """Создает небольшую выборку по жанрам
@@ -60,8 +60,8 @@ class BookInstance(models.Model):
     """Описание экземпляра книги"""
 
     LOAN_STATUS = (
-        ('m', 'На реставрации'),
-        ('o', 'На руках'),
+        ('f', 'На реставрации'),
+        ('l', 'На руках'),
         ('a', 'В наличии'),
         ('r', 'Забронирована'),
     )
@@ -81,7 +81,7 @@ class BookInstance(models.Model):
     status = models.CharField(max_length=1,
                               choices=LOAN_STATUS,
                               blank=True,
-                              default='m',
+                              default='a',
                               help_text="Метка наличия")
     
     class Meta:
@@ -101,7 +101,7 @@ class Author(models.Model):
     date_of_death = models.DateField('Died', null=True, blank=True)
 
     def get_absolute_url(self):
-        return reverse('author-detail', args=[str(self.id)])    
+        return reverse('author_detail', args=[int(self.id)])    
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
@@ -118,7 +118,7 @@ class Language(models.Model):
                             help_text="Укажите язык текста")    
 
     def get_absolute_url(self):
-        return reverse('language-detail', args=[str(self.id)])
+        return reverse('language_detail', args=[str(self.id)])
     
     def __str__(self):
         return f"Язык текста {self.name}"
