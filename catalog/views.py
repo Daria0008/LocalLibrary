@@ -59,6 +59,13 @@ class AuthorDetailView(generic.DetailView):
     template_name = 'author_detail.html'
 
 
+class LoanedBooksListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    context_object_name = 'borrowed'
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 50
+
+
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """
     Класс для списка взятых книг для текущего пользователя
@@ -69,4 +76,4 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='l').order_by('due_back')

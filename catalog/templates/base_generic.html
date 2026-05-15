@@ -19,17 +19,17 @@
     <div class="container-fluid">
       <ul class="sidebar-nav">
       {% if user.is_authenticated %}
-        <li>User: {{ user.get_username }}</li>
-        <li><a href="{% url 'my_borrowed' %}">My Borrowed</a></li>
+        <li>Пользователь: {{ user.get_username }}</li>
+        <li><a href="{% url 'my_borrowed' %}">Взятые книги</a></li>
         <li>
           <form method="post" action="{% url 'logout' %}" style="display:inline">
             {% csrf_token %}
             <button type="submit" style="background: none; border: none; color:brown; cursor: pointer; padding: 0;">
-            Logout </button>
+            Выйти </button>
           </form>
         </li>
       {% else %}
-        <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+        <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>
       {% endif %}
       </ul>
       <div class="row">
@@ -40,7 +40,7 @@
               <li><a href="{% url 'books' %}">Список книг</a></li>
               <li><a href="{% url 'authors' %}">Список писателей</a></li>
               {% if user.is_authenticated %}
-                <li>User: {{ user.get_username }}</li>
+                <li>Пользователь: {{ user.get_username }}</li>
                 <li>
                   <form method="post" action="{% url 'logout' %}" style="display:inline">
                     {% csrf_token %}

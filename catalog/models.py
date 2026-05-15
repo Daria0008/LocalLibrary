@@ -45,14 +45,7 @@ class Book(models.Model):
         """
 
         return ', '.join([genre.name for genre in self.genre.all()[:3]])
-    
-    @property
-    def is_overdue(self):
-        if self.due_back and date.today() > self.due_back:
-            return True
-
-        return False
-    
+        
     display_genre.short_description = 'Genre'
 
 
@@ -86,10 +79,17 @@ class BookInstance(models.Model):
     
     class Meta:
         ordering = ["due_back"]
-        permissions = (("can_mark_returned", "Set book as returned"),)
+        permissions = (("can_mark_returned", "Отметить как возвращенную"),)
 
     def __str__(self):
         return f"Книга рег.номер {self.id} под названием {self.book.title}"
+    
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+
+        return False
 
 
 class Author(models.Model):
@@ -101,7 +101,7 @@ class Author(models.Model):
     date_of_death = models.DateField('Died', null=True, blank=True)
 
     def get_absolute_url(self):
-        return reverse('author_detail', args=[int(self.id)])    
+        return reverse('author_detail', args=[str(self.id)])    
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
