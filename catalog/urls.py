@@ -1,13 +1,13 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('books/', views.BookListView.as_view(), name='books'),
-    path(r'^book/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book_detail'),
+    re_path(r'^book/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book_detail'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
-    path(r'^author/(?P<pk>\d+)$', views.AuthorDetailView.as_view(), name='author_detail'),
+    re_path(r'^author/(?P<pk>\d+)$', views.AuthorDetailView.as_view(), name='author_detail'),
     path(r'^mybooks/$', views.LoanedBooksByUserListView.as_view(), name='my_borrowed'),
     path(r'borrowed/', views.LoanedBooksListView.as_view(), name='borrowed'),
 ]
