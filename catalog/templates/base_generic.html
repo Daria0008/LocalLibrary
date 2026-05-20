@@ -21,6 +21,9 @@
       {% if user.is_authenticated %}
         <li>Пользователь: {{ user.get_username }}</li>
         <li><a href="{% url 'my_borrowed' %}">Взятые книги</a></li>
+        {% if perms.catalog.can_mark_returned %}
+          <li><a href="{% url 'borrowed' %}">Книги на руках</a></li>
+        {% endif %}
         <li>
           <form method="post" action="{% url 'logout' %}" style="display:inline">
             {% csrf_token %}

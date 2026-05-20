@@ -64,8 +64,11 @@ class AuthorDetailView(generic.DetailView):
 class LoanedBooksListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     context_object_name = 'borrowed'
-    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    template_name = 'catalog/bookinstance_list_borrowed.html'
     paginate_by = 50
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status='l')
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
