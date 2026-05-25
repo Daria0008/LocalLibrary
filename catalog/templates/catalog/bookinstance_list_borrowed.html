@@ -6,7 +6,7 @@
       <h1>Книги на руках у читателей</h1>
       <ol>
         {% for book in borrowed %}
-          <li> {{ book.borrower }}, {{ book.book.title }}, {{book.due_back}}</li>
+          <li> {{ book.borrower }}, <a href="{{ book.book.get_absolute_url }}">{{ book.book.title }}</a>, {{book.due_back}}</li>
         {% endfor %}
       </ol>
     {% endif %}

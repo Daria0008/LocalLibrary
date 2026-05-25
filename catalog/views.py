@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 
@@ -61,11 +61,15 @@ class AuthorDetailView(generic.DetailView):
     template_name = 'author_detail.html'
 
 
-class LoanedBooksListView(LoginRequiredMixin, generic.ListView):
+class LoanedBooksListView(LoginRequiredMixin,
+                          PermissionRequiredMixin,
+                          generic.ListView
+):
     model = BookInstance
     context_object_name = 'borrowed'
     template_name = 'catalog/bookinstance_list_borrowed.html'
     paginate_by = 50
+    permission_required = 'catalog.can_mark_returned'
 
     def get_queryset(self):
         return BookInstance.objects.filter(status='l')
@@ -82,3 +86,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='l').order_by('due_back')
+
+
+class RenewBookLibrarian(generic.UpdateView):
+    pass
