@@ -3,6 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+
 class RenewBookForm(forms.Form):
     renewal_date = forms.DateField(
         label="Обновить срок возврата",

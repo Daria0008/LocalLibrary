@@ -1,10 +1,9 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.views import generic
 
 from .models import Author, Book, BookInstance, Genre
@@ -16,7 +15,8 @@ def index(request):
 
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
-    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+    num_instances_available = BookInstance.objects.filter(
+        status__exact='a').count()
     num_authors = Author.objects.count()
     num_genres = Genre.objects.count()
     title_word = Book.display_genre
@@ -26,7 +26,7 @@ def index(request):
 
     return render(
         request, 'index.html',
-        context = {
+        context={
             'num_books': num_books,
             'num_instances': num_instances,
             'num_instances_available': num_instances_available,
@@ -69,8 +69,7 @@ class AuthorDetailView(generic.DetailView):
 
 class LoanedBooksListView(LoginRequiredMixin,
                           PermissionRequiredMixin,
-                          generic.ListView
-):
+                          generic.ListView):
     model = BookInstance
     context_object_name = 'borrowed'
     template_name = 'catalog/bookinstance_list_borrowed.html'
@@ -91,7 +90,10 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='l').order_by('due_back')
+        return BookInstance.objects.filter(
+            borrower=self.request.user
+            ).filter(status__exact='l'
+                     ).order_by('due_back')
 
 
 @login_required
@@ -109,14 +111,18 @@ def RenewBookLibrarian(request, pk):
 
             book_inst.due_back = form.cleaned_data['renewal_date']
             book_inst.save()
-        
+
     else:
 
-        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-        form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})
-        
+        proposed_renewal_date = (
+            datetime.date.today()
+            + datetime.timedelta(weeks=3)
+        )
+
+        form = RenewBookForm(initial={'renewal_date': proposed_renewal_date, })
+
     return render(
         request,
         'catalog/book_renew_librarian.html',
-        context = {'form': form, 'bookinst': book_inst},
+        context={'form': form, 'bookinst': book_inst},
     )

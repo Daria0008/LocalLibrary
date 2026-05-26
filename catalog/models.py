@@ -35,17 +35,17 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('book_detail', args=[str(self.id)])
-    
+
     def display_genre(self):
         """Создает небольшую выборку по жанрам
         для отображения в админке
         """
 
         return ', '.join([genre.name for genre in self.genre.all()[:3]])
-        
+
     display_genre.short_description = 'Genre'
 
 
@@ -61,14 +61,14 @@ class BookInstance(models.Model):
 
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
-                          help_text="Уникальный числовой идентификатор для книги")
+                          help_text="Уникальный числовой идентификатор книги")
     borrower = models.ForeignKey(User,
                                  on_delete=models.SET_NULL,
                                  null=True,
                                  blank=True)
     book = models.ForeignKey('Book',
                              on_delete=models.SET_NULL,
-                             null=True)    
+                             null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=1,
@@ -76,14 +76,14 @@ class BookInstance(models.Model):
                               blank=True,
                               default='a',
                               help_text="Метка наличия")
-    
+
     class Meta:
         ordering = ["due_back"]
         permissions = (("can_mark_returned", "Отметить как возвращенную"),)
 
     def __str__(self):
         return f"Книга рег.номер {self.id} под названием {self.book.title}"
-    
+
     @property
     def is_overdue(self):
         if self.due_back and date.today() > self.due_back:
@@ -105,7 +105,7 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
-    
+
     class Meta:
         ordering = ['last_name']
 
@@ -115,10 +115,10 @@ class Language(models.Model):
 
     name = models.CharField(max_length=100,
                             unique=True,
-                            help_text="Укажите язык текста")    
+                            help_text="Укажите язык текста")
 
     def get_absolute_url(self):
         return reverse('language_detail', args=[str(self.id)])
-    
+
     def __str__(self):
         return f"Язык текста {self.name}"
