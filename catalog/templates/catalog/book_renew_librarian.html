@@ -1,9 +1,11 @@
 {% extends "base_generic.html" %}
 {% block content %}
 
-    <h1>Renew: {{bookinst.book.title}}</h1>
-    <p>Borrower: {{bookinst.borrower}}</p>
-    <p{% if bookinst.is_overdue %} class="text-danger"{% endif %}>Due date: {{bookinst.due_back}}</p>
+    <h1>Продлить книгу: </h1>
+    <h2>{{bookinst.book.title}}</h2>
+    <br>
+    <p><b>Читатель: </b>{{bookinst.borrower}}</p>
+    <p{% if bookinst.is_overdue %} class="text-danger"{% endif %}><b>Вернуть до: </b>{{bookinst.due_back}}</p>
 
     <form action="" method="post">
         {% csrf_token %}
