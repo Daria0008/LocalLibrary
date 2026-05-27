@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Author, Book, BookInstance, Genre
@@ -109,7 +110,7 @@ def RenewBookLibrarian(request, pk):
 
         if form.is_valid():
 
-            book_inst.due_back = form.cleaned_data['renewal_date']
+            book_inst.due_back = form.cleaned_data['due_back']
             book_inst.save()
 
     else:
@@ -119,7 +120,7 @@ def RenewBookLibrarian(request, pk):
             + datetime.timedelta(weeks=3)
         )
 
-        form = RenewBookForm(initial={'renewal_date': proposed_renewal_date, })
+        form = RenewBookForm(initial={'due_back': proposed_renewal_date, })
 
     return render(
         request,

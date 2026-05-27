@@ -1,17 +1,15 @@
 import datetime
-from django import forms
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from .models import BookInstance
 
-class RenewBookForm(forms.Form):
-    renewal_date = forms.DateField(
-        label="Обновить срок возврата",
-        help_text="Новая дата в пределах 4 недель",
-    )
+
+class RenewBookForm(ModelForm):
 
     def clean_renewal_date(self):
-        data = self.cleaned_data['renewal_date']
+        data = self.cleaned_data['due_back']
 
         if data < datetime.date.today():
             raise ValidationError(_('Эта дата уже прошла'))
@@ -20,3 +18,9 @@ class RenewBookForm(forms.Form):
             raise ValidationError(_('Нельзя выдать более, чем на 4 недели'))
 
         return data
+    
+    class Meta:
+        model = BookInstance
+        fields = ['due_back']
+        labels = {'due_back': _('Обновить срок возврата'),}
+        help_texts = {'due_back': _('Новая дата в пределах 4 недель')}

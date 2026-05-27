@@ -2,7 +2,9 @@
 {% block content %}
 
     <h1>Продлить книгу: </h1>
-    <h2>{{bookinst.book.title}}</h2>
+    <br>
+    <h2>"{{bookinst.book.title}}"</h2>
+    <p>{{bookinst.book.author}}</p>
     <br>
     <p><b>Читатель: </b>{{bookinst.borrower}}</p>
     <p{% if bookinst.is_overdue %} class="text-danger"{% endif %}><b>Вернуть до: </b>{{bookinst.due_back}}</p>
