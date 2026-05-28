@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from .models import Author, Book, BookInstance, Genre
@@ -127,3 +128,36 @@ def RenewBookLibrarian(request, pk):
         'catalog/book_renew_librarian.html',
         context={'form': form, 'bookinst': book_inst},
     )
+
+
+"""CRUD для работы с автором"""
+class AuthorCreate(generic.CreateView):
+    model = Author
+    fields = '__all__'
+    initial={'date_of_death':'1900-01-01',}
+
+
+class AuthorUpdate(generic.UpdateView):
+    model = Author
+    fields = ['first_name','last_name','date_of_birth','date_of_death']
+
+
+class AuthorDelete(generic.DeleteView):
+    model = Author
+    success_url = reverse_lazy('authors')
+
+
+"""CRUD для работы с книгой"""
+class BookCreate(generic.CreateView):
+    model = Book
+    fields = '__all__'
+
+
+class BookUpdate(generic.UpdateView):
+    model = Book
+    fields = '__all__'
+
+
+class BookDelete(generic.DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')

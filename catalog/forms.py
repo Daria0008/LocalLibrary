@@ -8,7 +8,7 @@ from .models import BookInstance
 
 class RenewBookForm(ModelForm):
 
-    def clean_renewal_date(self):
+    def clean_due_back(self):
         data = self.cleaned_data['due_back']
 
         if data < datetime.date.today():
