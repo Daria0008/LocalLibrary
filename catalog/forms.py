@@ -18,9 +18,9 @@ class RenewBookForm(ModelForm):
             raise ValidationError(_('Нельзя выдать более, чем на 4 недели'))
 
         return data
-    
+
     class Meta:
         model = BookInstance
         fields = ['due_back']
-        labels = {'due_back': _('Обновить срок возврата'),}
+        labels = {'due_back': _('Обновить срок возврата'), }
         help_texts = {'due_back': _('Новая дата в пределах 4 недель')}
