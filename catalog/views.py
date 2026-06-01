@@ -131,18 +131,21 @@ def RenewBookLibrarian(request, pk):
 
 """CRUD для работы с автором"""
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class AuthorCreate(generic.CreateView):
     model = Author
     fields = '__all__'
     initial = {'date_of_death': '1900-01-01', }
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class AuthorUpdate(generic.UpdateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class AuthorDelete(generic.DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
@@ -150,17 +153,20 @@ class AuthorDelete(generic.DeleteView):
 
 """CRUD для работы с книгой"""
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class BookCreate(generic.CreateView):
     model = Book
     fields = '__all__'
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class BookUpdate(generic.UpdateView):
     model = Book
     fields = '__all__'
 
-
+@login_required
+@permission_required('catalog.can_mark_returned')
 class BookDelete(generic.DeleteView):
     model = Book
     success_url = reverse_lazy('books')
