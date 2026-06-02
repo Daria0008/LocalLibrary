@@ -131,42 +131,52 @@ def RenewBookLibrarian(request, pk):
 
 """CRUD для работы с автором"""
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class AuthorCreate(generic.CreateView):
+class AuthorCreate(LoginRequiredMixin,
+                   PermissionRequiredMixin,
+                   generic.CreateView):
     model = Author
     fields = '__all__'
     initial = {'date_of_death': '1900-01-01', }
+    permission_required = 'catalog.can_mark_returned'
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class AuthorUpdate(generic.UpdateView):
+
+class AuthorUpdate(LoginRequiredMixin,
+                   PermissionRequiredMixin,
+                   generic.UpdateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    permission_required = 'catalog.can_mark_returned'
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class AuthorDelete(generic.DeleteView):
+
+class AuthorDelete(LoginRequiredMixin,
+                   PermissionRequiredMixin,
+                   generic.DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
+    permission_required = 'catalog.can_mark_returned'
 
 
 """CRUD для работы с книгой"""
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class BookCreate(generic.CreateView):
+class BookCreate(LoginRequiredMixin,
+                 PermissionRequiredMixin,
+                 generic.CreateView):
     model = Book
     fields = '__all__'
+    permission_required = 'catalog.can_mark_returned'
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class BookUpdate(generic.UpdateView):
+
+class BookUpdate(LoginRequiredMixin,
+                 PermissionRequiredMixin,
+                 generic.UpdateView):
     model = Book
     fields = '__all__'
+    permission_required = 'catalog.can_mark_returned'
 
-@login_required
-@permission_required('catalog.can_mark_returned')
-class BookDelete(generic.DeleteView):
+
+class BookDelete(LoginRequiredMixin,
+                 PermissionRequiredMixin,
+                 generic.DeleteView):
     model = Book
     success_url = reverse_lazy('books')
+    permission_required = 'catalog.can_mark_returned'

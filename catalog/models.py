@@ -44,6 +44,11 @@ class Book(models.Model):
         help_text="Выберите жанр книги",
         verbose_name="Жанр"
     )
+    language = models.ManyToManyField(
+        'Language',
+        help_text="Доступные языки",
+        verbose_name="Языки"
+    )
 
     def __str__(self):
         return self.title
