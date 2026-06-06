@@ -131,6 +131,7 @@ def RenewBookLibrarian(request, pk):
 
 """CRUD для работы с автором"""
 
+
 class AuthorCreate(LoginRequiredMixin,
                    PermissionRequiredMixin,
                    generic.CreateView):
@@ -157,6 +158,7 @@ class AuthorDelete(LoginRequiredMixin,
 
 
 """CRUD для работы с книгой"""
+
 
 class BookCreate(LoginRequiredMixin,
                  PermissionRequiredMixin,
